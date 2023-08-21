@@ -13,13 +13,19 @@ Actions include a variety of non-breaking (e.g. binaries will still execute) mod
 The `observation_space` of the `gym` environments are a feature vector representing the malware sample. In this work， `numpy.array == 2381`.
 
 ### Agents
-
-
-
+To guide the agent training, we use the [SHAP](https://github.com/shap/shap) to explain the black-box model and exploit information as a Shapley prior. Then, two modules are proposed to further improve RL: Shapley prior-based prioritized experience replay, and Thompson sampling within actions. Finally, a D3QN RL algorithm is instantiated using the above modules.
 
 
 ## Setup
-To get `malware_rl` up and running you will need the follow external dependencies:
+The PSP-Mal framework is built on Python3.7 we recommend first creating a virtualenv  then performing the following actions ensure you have the correct python libraries:
+
+```sh
+pip install -r requirements.txt
+```
+
+PSP-Mal leverages the [LIEF](https://github.com/lief-project/LIEF) and [PEfile](https://github.com/erocarrera/pefile) to perform functionality-preserving modifications.
+
+To get `PSP-Mal` running you need prepare the following data:
 
 - Target detector - [Ember](https://github.com/Azure/2020-machine-learning-security-evasion-competition/blob/master/defender/defender/models/ember_model.txt.gz),  [SOREL-20M](https://github.com/sophos-ai/SOREL-20M) models. Model files need to be placed into the `malware_rl/envs/utils/` directory.
 
