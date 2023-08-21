@@ -10,7 +10,7 @@ MalwareRL exposes `gym` environments for Ember and MalConv to allow researchers 
 The LightGBM (Light Gradient Boosting Machine) models, respectively trained on [Ember](https://github.com/endgameinc/ember) (Endgame Malware BEnchmark for Research) ([paper](https://arxiv.org/abs/1804.04637)) and [SOREL-20M](https://github.com/sophos/SOREL-20M) (SOREL-20M: A Large Scale Benchmark Dataset for Malicious PE Detection) ([paper](https://arxiv.org/abs/2012.07634)), were implemented to facilitate the comparison of the PSP-Mal and baseline methods.
 ### Action Space
 Actions include a variety of non-breaking (e.g. binaries will still execute) modifications to the PE header, sections, imports and overlay and are listed below.
-
+![image](actionset.PNG)
 
 ### Observation Space
 The `observation_space` of the `gym` environments are an array representing the feature vector. For ember this is `numpy.array == 2381` and malconv `numpy.array == 1024**2`. The MalConv gym presents an opportunity to try RL techniques to generalize learning across large State Spaces.
