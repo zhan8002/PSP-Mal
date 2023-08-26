@@ -14,7 +14,7 @@ The `observation_space` of the `gym` environments are a feature vector represent
 
 ### Agents
 To guide the agent training, we use the [SHAP](https://github.com/shap/shap) to explain the black-box model and exploit information as a Shapley prior. Then, two modules are proposed to further improve RL: Shapley prior-based prioritized experience replay, and Thompson sampling within actions. Finally, a D3QN RL algorithm is instantiated using the above modules.
-
+![image](agent.JPG)
 
 ## Setup
 The PSP-Mal framework is built on Python3.7 we recommend first creating a virtualenv  then performing the following actions ensure you have the correct python libraries:
@@ -27,11 +27,11 @@ PSP-Mal leverages the [LIEF](https://github.com/lief-project/LIEF) and [PEfile](
 
 To get `PSP-Mal` running you need prepare the following data:
 
-- Target detector - [Ember](https://github.com/Azure/2020-machine-learning-security-evasion-competition/blob/master/defender/defender/models/ember_model.txt.gz),  [SOREL-20M](https://github.com/sophos-ai/SOREL-20M) models. Model files need to be placed into the `malware_rl/envs/utils/` directory.
+- Target detector - [Ember](https://github.com/Azure/2020-machine-learning-security-evasion-competition/blob/master/defender/defender/models/ember_model.txt.gz),  [SOREL-20M](https://github.com/sophos-ai/SOREL-20M) models. Model files need to be placed into the `malware_rl/envs/utils/` directory. In the repo, we provide the weights file for the SOREL-20M model, while the Ember model needs to be downloaded on its own due to upload size limitations.
 
 - Benign binaries - a small set of "trusted" binaries (e.g. grabbed from base Windows installation) you can download some via [PortableApps](https://portableapps.com). And then store these binaries in `malware_rl/envs/controls/trusted`
 
-- Malware samples - Though we cannot release the malware downloaded by [Virustotal](https://www.virustotal.com/)，we offer the list of hashes of samples in `sample_hash.txt`
+- Malware samples - Store malware samples in `malware_rl/envs/utils/samples`. Though we cannot release the malware downloaded by [Virustotal](https://www.virustotal.com/)，we offer the list of hashes of samples in `sample_hash.txt`
 
 
 ## Baselines
