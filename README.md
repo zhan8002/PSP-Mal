@@ -7,6 +7,7 @@ The LightGBM models, respectively trained on [Ember](https://github.com/endgamei
 
 ### Action Space
 Actions include a variety of non-breaking (e.g. binaries will still execute) modifications to the PE header, sections, imports and overlay and are listed below.
+
 ![image](actionset.jpg)
 
 ### Observation Space
@@ -14,6 +15,7 @@ The `observation_space` of the `gym` environments are a feature vector represent
 
 ### Agents
 To guide the agent training, we use the [SHAP](https://github.com/shap/shap) to explain the black-box model and exploit information as a Shapley prior. Then, two modules are proposed to further improve RL: Shapley prior-based prioritized experience replay, and Thompson sampling within actions. Finally, a D3QN RL algorithm is instantiated using the above modules.
+
 ![image](agent.JPG)
 
 ## Setup
