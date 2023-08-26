@@ -10,13 +10,14 @@ import pickle
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--max_episodes', type=int, default=1100)
-parser.add_argument('--per', type=bool, default=True) #  use prioried experience replay instead random
-parser.add_argument('--ckpt_dir', type=str, default='./checkpoints/EMBER_PSP/')
-parser.add_argument('--reward_path', type=str, default='./output_images/reward.png')
-parser.add_argument('--epsilon_path', type=str, default='./output_images/epsilon.png')
+parser.add_argument('--per', type=bool, default=True) # use prioritized experience replay instead random
+parser.add_argument('--ckpt_dir', type=str, default='./checkpoints/EMBER_PSP/') # save path of model
+parser.add_argument('--reward_path', type=str, default='./output_images/reward.png') # log reward curve
+parser.add_argument('--epsilon_path', type=str, default='./output_images/epsilon.png') # log epsilon curve
 
 args = parser.parse_args()
 
+# define a random agent
 class RandomAgent:
     """The world's simplest agent!"""
 
@@ -29,6 +30,7 @@ class RandomAgent:
 def main():
     env = gym.make('ember-train-v0')
 
+    # define D3QN agent
     agent = D3QN(alpha=0.0003, state_dim=env.observation_space.shape[0], action_dim=env.action_space.n,
                  fc1_dim=256, fc2_dim=256, ckpt_dir=args.ckpt_dir, gamma=0.99, tau=0.005, epsilon=1,
                  eps_end=0.1, eps_dec=5e-4, max_size=500000, batch_size=256, per=args.per,)
@@ -47,9 +49,9 @@ def main():
             observation_, reward, done, info = env.step(action)
 
             if args.per != True:
-                agent.remember(observation, action, reward, observation_, done)
+                agent.remember(observation, action, reward, observation_, done) # without per
             else:
-                agent.remember_shapley(observation, action, reward, observation_, done, p_shapley)
+                agent.remember_shapley(observation, action, reward, observation_, done, p_shapley) # adopt per
 
             agent.learn()
             total_reward += reward
@@ -62,6 +64,7 @@ def main():
         print('EP:{} Reward:{} Avg_reward:{} Epsilon:{}'.
               format(episode+1, total_reward, avg_reward, agent.epsilon))
 
+        # save model and thompson sampling weight
         if (episode + 1) % 100 == 0:
             agent.save_models(episode+1)
             with open(args.ckpt_dir + 'arm.pkl', 'wb') as file:
@@ -84,6 +87,7 @@ def main():
 
     agent.load_models(1400)
 
+    # load thompson sampling weight
     with open(args.ckpt_dir + 'arm.pkl', 'rb') as file:
         env_test.arms = pickle.loads(file.read())
 
